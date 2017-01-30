@@ -22,31 +22,29 @@ for line in inFile:
 	evaledClause = []
 	numOfLiterals = 0
 	numOfClauses = 0
-		
-	for char in line:
-		if char == '(':
+
+	for char in range(0, len(line)):
+		if line[char] == "(":
 			numOfClauses += 1
 			currentClause = []
 			evaledClause = []
 			
-		elif char != ')':
-			currentClause.append(char)
+		if line[char] != ")":
+			currentClause.append(line[char])
 			if line[char - 1] == "!":
-				if eval(char) == 1:
+				if eval(line[char]) == 1:
 					evaledClause.append(0)
 				else:
 					evaledClause.append(1)
-			else:
-				if char.isalpha():
-					evaledClause.append(char)
-					
+
+		if line[char].isalpha():
+			evaledClause.append(line[char])
+			if line[char] not in literals:
+				literals.append(line[char])
+
 		else:
-			currentClause.append(char)
-					 
-		if char in literals:
-			continue
-		literals.append(char)
-	
+			currentClause.append(line[char])
+		
 	print line
 	print "Literals: ", literals
 	print "Number of literals: ", len(literals)
